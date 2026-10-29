@@ -1,67 +1,353 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovaNet</title>
+  <meta name="theme-color" content="#080812">
+  <title>NovaNet | Premium Server Hosting</title>
+  <meta name="description" content="Explore NovaNet game, VPS, web and cloud hosting plans.">
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080812;
+      --panel: #111121;
+      --blue: #45a5ff;
+      --purple: #9b5cff;
+      --text: #f5f5ff;
+      --muted: #aaaac4;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      padding: 50px 20px;
-      background: #071426;
-      color: white;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 7%;
+      border-bottom: 1px solid #24243b;
+      background: #080812ee;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span { color: var(--blue); }
+
+    .nav a:last-child {
+      border: 1px solid #6e5aff;
+      padding: 8px 14px;
+      border-radius: 9px;
+      font-size: 14px;
+    }
+
+    .hero {
       text-align: center;
+      padding: 82px 20px 65px;
+      background:
+        radial-gradient(ellipse at 25% 10%, #174a9638, transparent 45%),
+        radial-gradient(ellipse at 80% 20%, #8128c238, transparent 45%);
     }
+
+    .tag {
+      display: inline-block;
+      color: #a9d6ff;
+      background: #192641;
+      border: 1px solid #304a78;
+      border-radius: 30px;
+      padding: 6px 14px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
     h1 {
-      color: #40d9ff;
-      font-size: 48px;
-      text-shadow: 0 0 20px #087ca7;
+      font-size: clamp(36px, 7vw, 65px);
+      line-height: 1.12;
+      margin: 22px auto 18px;
+      max-width: 850px;
     }
-    p {
-      color: #cbd5e1;
-      font-size: 18px;
-      line-height: 1.7;
+
+    .gradient {
+      background: linear-gradient(90deg, #45a5ff, #a36bff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
-    button {
-      background: #40d9ff;
-      color: #071426;
-      border: 0;
-      border-radius: 10px;
-      padding: 14px 28px;
+
+    .hero p {
+      max-width: 600px;
+      margin: 0 auto;
+      color: var(--muted);
       font-size: 16px;
-      font-weight: bold;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 13px 23px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(100deg, #277df4, #8448ed);
+      box-shadow: 0 0 25px #6254ff38;
+    }
+
+    .section {
+      padding: 48px 7% 75px;
+      max-width: 1250px;
+      margin: auto;
+    }
+
+    .section-heading { text-align: center; margin-bottom: 35px; }
+
+    .section-heading h2 { font-size: 32px; margin-bottom: 8px; }
+
+    .section-heading p { color: var(--muted); }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      position: relative;
+      background: linear-gradient(145deg, #151529, #0d0d19);
+      border: 1px solid #292945;
+      border-radius: 18px;
+      padding: 27px;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #7461ff;
+    }
+
+    .card.featured {
+      border-color: #7658ed;
+      box-shadow: 0 0 28px #7850ff18;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      font-size: 24px;
+      background: linear-gradient(135deg, #173d68, #39205c);
+      margin-bottom: 18px;
+    }
+
+    .card h3 { font-size: 22px; margin-bottom: 5px; }
+    .card .desc { color: var(--muted); font-size: 14px; min-height: 45px; }
+
+    .price {
+      font-size: 34px;
+      font-weight: 800;
+      margin: 18px 0;
+    }
+
+    .price small {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .features {
+      list-style: none;
+      border-top: 1px solid #292945;
+      padding-top: 17px;
+    }
+
+    .features li {
+      color: #dedeee;
+      font-size: 14px;
+      margin: 9px 0;
+    }
+
+    .features li::before {
+      content: "✓";
+      color: #69c7ff;
+      margin-right: 9px;
+    }
+
+    .plan-btn {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+      padding: 11px;
+      border: 1px solid #494969;
+      border-radius: 9px;
+      font-weight: 700;
+    }
+
+    .featured .plan-btn {
+      background: linear-gradient(100deg, #277df4, #8448ed);
+      border-color: transparent;
+    }
+
+    .notice {
+      color: #aaaac4;
+      text-align: center;
+      font-size: 12px;
+      margin-top: 25px;
+    }
+
+    .contact {
+      margin: 0 7% 65px;
+      padding: 35px 22px;
+      text-align: center;
+      border: 1px solid #343052;
+      border-radius: 18px;
+      background: radial-gradient(ellipse at top, #32205a, #111121 70%);
+    }
+
+    .contact h2 { font-size: 28px; margin-bottom: 8px; }
+    .contact p { color: var(--muted); }
+
+    footer {
+      text-align: center;
+      border-top: 1px solid #24243b;
+      padding: 23px 15px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 650px) {
+      .nav { padding: 14px 5%; }
+      .logo { font-size: 22px; }
+      .hero { padding: 65px 18px 52px; }
+      .section { padding: 38px 5% 55px; }
+      .plans { grid-template-columns: 1fr; }
+      .card { padding: 23px; }
+      .contact { margin: 0 5% 45px; }
     }
   </style>
 </head>
+
 <body>
-  <h1>NovaNet</h1>
-  <h2>Our Network. Our Future.</h2>
-  <p>Building a connected world.</p>
-  <button onclick="alert('Welcome to NovaNet!')">Explore</button>
-</<hr style="margin-top:50px;border-color:#40d9ff;">
+  <nav class="nav">
+    <a class="logo" href="#">Nova<span>Net</span></a>
+    <a href="#plans">View Plans ↗</a>
+  </nav>
 
-<h2>NovaNet Server Plans</h2>
-<p>Choose the right solution for your needs.</p>
+  <header class="hero">
+    <span class="tag">Next-Gen Hosting</span>
+    <h1>Power Your Projects<br>With <span class="gradient">NovaNet</span></h1>
+    <p>
+      Reliable hosting for your games, websites and applications.
+      Find a plan that fits your project.
+    </p>
+    <a class="primary-btn" href="#plans">Explore Server Plans →</a>
+  </header>
 
-<div style="background:#10243a;padding:20px;margin:20px auto;border-radius:15px;max-width:400px;">
-  <h2>🎮 Game Servers</h2>
-  <h3>Free Demo</h3>
-  <p>Game server hosting for games like Minecraft.</p>
-</div>
+  <main>
+    <section class="section" id="plans">
+      <div class="section-heading">
+        <h2>Our <span class="gradient">Hosting Plans</span></h2>
+        <p>Choose the hosting that works for you.</p>
+      </div>
 
-<div style="background:#10243a;padding:20px;margin:20px auto;border-radius:15px;max-width:400px;">
-  <h2>🌐 Website Hosting</h2>
-  <h3>Demo: ₹199/month</h3>
-  <p>Hosting for websites and online projects.</p>
-</div>
+      <div class="plans">
+        <article class="card featured">
+          <div class="icon">🎮</div>
+          <h3>Game Server</h3>
+          <p class="desc">Hosting for multiplayer games and gaming communities.</p>
+          <div class="price">₹299 <small>/ month*</small></div>
+          <ul class="features">
+            <li>Game server hosting</li>
+            <li>Configurable server resources</li>
+            <li>Community-friendly setup</li>
+            <li>Upgrade options</li>
+          </ul>
+          <a class="plan-btn" href="#contact">Choose Game Server</a>
+        </article>
 
-<div style="background:#10243a;padding:20px;margin:20px auto;border-radius:15px;max-width:400px;">
-  <h2>☁️ Cloud / VPS</h2>
-  <h3>Custom Plan</h3>
-  <p>Virtual servers for apps and development.</p>
-</div>
+        <article class="card">
+          <div class="icon">⚡</div>
+          <h3>VPS Hosting</h3>
+          <p class="desc">Virtual server resources for apps and development.</p>
+          <div class="price">₹499 <small>/ month*</small></div>
+          <ul class="features">
+            <li>Virtual private server</li>
+            <li>Flexible resource options</li>
+            <li>Developer-friendly environment</li>
+            <li>Scalable configurations</li>
+          </ul>
+          <a class="plan-btn" href="#contact">Choose VPS</a>
+        </article>
 
-<p style="font-size:13px;">Demo plans only. Real server services are not available yet.</p>ody>
+        <article class="card">
+          <div class="icon">🌐</div>
+          <h3>Web Hosting</h3>
+          <p class="desc">A home for your website, portfolio or project.</p>
+          <div class="price">₹149 <small>/ month*</small></div>
+          <ul class="features">
+            <li>Website hosting plan</li>
+            <li>Suitable for small projects</li>
+            <li>Domain connection support</li>
+            <li>Plan upgrade options</li>
+          </ul>
+          <a class="plan-btn" href="#contact">Choose Web Hosting</a>
+        </article>
+
+        <article class="card">
+          <div class="icon">☁️</div>
+          <h3>Cloud Server</h3>
+          <p class="desc">Flexible cloud infrastructure for growing workloads.</p>
+          <div class="price">₹799 <small>/ month*</small></div>
+          <ul class="features">
+            <li>Cloud server options</li>
+            <li>Flexible configurations</li>
+            <li>Resources for growing projects</li>
+            <li>Scalable plan choices</li>
+          </ul>
+          <a class="plan-btn" href="#contact">Choose Cloud Server</a>
+        </article>
+      </div>
+
+      <p class="notice">
+        *Demo prices for website design only. Hosting, resources,
+        availability and final prices must be confirmed before sale.
+      </p>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2>Ready to Get Started?</h2>
+      <p>Contact the NovaNet team to confirm plan availability and pricing.</p>
+      <a class="primary-btn" href="#plans">Review Plans</a>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> NovaNet. All rights reserved.
+    <br>Hosting for your next big idea.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
 </body>
 </html>
